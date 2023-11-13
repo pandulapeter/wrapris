@@ -11,10 +11,12 @@ script = ExtResource("1_6dj4i")
 texture = ExtResource("1_6ptim")
 
 [node name="SpriteLeftClone" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-256, 0)
 texture = ExtResource("1_6ptim")
 
 [node name="SpriteRightClone" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(256, 0)
 texture = ExtResource("1_6ptim")
 

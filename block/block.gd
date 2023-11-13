@@ -9,6 +9,7 @@ var normalizedDestination: Vector2
 var normalizedDestinationInNextFrame: Vector2
 var shapeId = ""
 var normalizedViewportSize: Vector2
+var isSettling = true
 
 func _ready():
 	# Snap to the grid
@@ -19,7 +20,9 @@ func _ready():
 	normalizedViewportSize = normalizePosition(get_viewport().size)
 	var cloneOffset = (normalizedViewportSize.x - 1) * calculateNormalizationScale() / scale.x
 	$SpriteLeftClone.position.x -= cloneOffset
+	$SpriteLeftClone.visible = true
 	$SpriteRightClone.position.x += cloneOffset
+	$SpriteRightClone.visible = true
 	
 	# Initialize the movement
 	normalizedDestination = normalizedPosition
@@ -53,13 +56,14 @@ func _process(delta):
 		normalizedDestination = normalizedDestinationInNextFrame
 		refreshDebugText()
 	
-	# Input handling
-	if Input.is_action_just_pressed("shape_move_left"):
-		moveLeft()
-	if Input.is_action_just_pressed("shape_move_right"):
-		moveRight()
-	if Input.is_action_just_pressed("shape_move_down"):
-		moveDown()
+	# Input handling for test scenes
+	if get_groups().size() == 1:
+		if Input.is_action_just_pressed("shape_move_left"):
+			moveLeft()
+		if Input.is_action_just_pressed("shape_move_right"):
+			moveRight()
+		if Input.is_action_just_pressed("shape_move_down"):
+			moveDown()
 		
 	# Move towards the destination
 	var destination = denormalizePosition(normalizedDestination)
@@ -67,8 +71,9 @@ func _process(delta):
 		global_position = lerp(global_position, destination, movementSpeed)
 	
 	# Move the actual block to the other edge after wrapping
-	if (normalizedDestination.x != wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1)):
-		if abs(global_position.x - destination.x) <= 2:
+	if abs(global_position.x - destination.x) <= 4:
+		isSettling = false
+		if (normalizedDestination.x != wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1)):
 			normalizedDestination = Vector2(
 				wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1),
 				normalizedDestination.y
@@ -78,6 +83,8 @@ func _process(delta):
 				denormalizePosition(normalizedDestination).x,
 				global_position.y
 			)
+	else:
+		isSettling = true
 
 func refreshDebugText():
 	if (shouldShowDebugInfo):
@@ -98,13 +105,13 @@ func denormalizePosition(position: Vector2):
 	return (position * scale) - (Vector2(1, 1) * scale / 2)
 
 func moveLeft():
-	move(Vector2.LEFT)
+	move(Vector2.LEFT, false)
 
 func moveRight():
-	move(Vector2.RIGHT)
+	move(Vector2.RIGHT, false)
 
 func moveDown():
-	if !move(Vector2.DOWN):
+	if !move(Vector2.DOWN, true):
 		isMoving = false
 
 func getBlocksInSameShape():
@@ -147,14 +154,17 @@ func calculateFutureDestinationWithWrapping(direction: Vector2):
 		target.y
 	)
 
-func move(direction: Vector2):
+func move(direction: Vector2, forced: bool):
 	# Check that the target position is empty, or is occupied by
 	# other blocks from the very same shape
 	var canMove = canMoveToDirection(direction)
+	var isSettlingAnimation = isSettling
 	for block in getBlocksInSameShape():
 		if not block.canMoveToDirection(direction):
 			canMove = false
-	if canMove && abs(global_position.x - denormalizePosition(normalizedDestination).x) < 4:
+		if block.isSettling:
+			isSettlingAnimation = true
+	if canMove && (forced || !isSettlingAnimation):
 		normalizedDestinationInNextFrame = calculateFutureDestinationWithoutWrapping(direction)
 	refreshDebugText()
 	return canMove
