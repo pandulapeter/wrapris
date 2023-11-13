@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://4ya5efy8tvue"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_ny7kf"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_ny7kf")
+
+[node name="TitleLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 157.0
+offset_bottom = 259.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 72
+text = "Patris"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="TestScenesMenuButton" type="MenuButton" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -97.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Test scenes"
+
+[node name="NewGameButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "New game"

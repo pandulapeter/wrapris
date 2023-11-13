@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://3rnb46mqief4"]
+
+[ext_resource type="Script" path="res://block/block.gd" id="1_6dj4i"]
+[ext_resource type="Texture2D" uid="uid://b7s3cvepyxokh" path="res://block/block.png" id="1_6ptim"]
+
+[node name="Block" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_6dj4i")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_6ptim")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Debug"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

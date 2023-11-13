@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cele3negr2dtm"]
+
+[ext_resource type="Script" path="res://shared/shared.gd" id="1_2uiq2"]
+
+[node name="Shared" type="Node"]
+script = ExtResource("1_2uiq2")
