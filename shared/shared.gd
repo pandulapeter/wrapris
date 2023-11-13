@@ -1,6 +1,6 @@
 extends Node
 
-var blockMovementSpeed = 0.1
+var blockMovementSpeed = 0.3
 var shapeCount = 0
 
 func _unhandled_input(event):

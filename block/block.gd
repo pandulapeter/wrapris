@@ -11,11 +11,15 @@ var shapeId = ""
 var normalizedViewportSize: Vector2
 
 func _ready():
-	normalizedViewportSize = normalizePosition(get_viewport().size)
-	
 	# Snap to the grid
 	var normalizedPosition = normalizePosition(global_position)
 	global_position = denormalizePosition(normalizedPosition)
+	
+	# Set up clones for seamless wrapping
+	normalizedViewportSize = normalizePosition(get_viewport().size)
+	var cloneOffset = (normalizedViewportSize.x - 1) * calculateNormalizationScale() / scale.x
+	$SpriteLeftClone.position.x -= cloneOffset
+	$SpriteRightClone.position.x += cloneOffset
 	
 	# Initialize the movement
 	normalizedDestination = normalizedPosition
@@ -37,6 +41,8 @@ func initializeInheritedState(groupName):
 	# Set the block color
 	if tint != null:
 		$Sprite.modulate = tint
+		$SpriteLeftClone.modulate = tint
+		$SpriteRightClone.modulate = tint
 		
 	# Handle debugging
 	$Label.visible = shouldShowDebugInfo
@@ -59,6 +65,19 @@ func _process(delta):
 	var destination = denormalizePosition(normalizedDestination)
 	if global_position != destination:
 		global_position = lerp(global_position, destination, movementSpeed)
+	
+	# Move the actual block to the other edge after wrapping
+	if (normalizedDestination.x != wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1)):
+		if abs(global_position.x - destination.x) <= 2:
+			normalizedDestination = Vector2(
+				wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1),
+				normalizedDestination.y
+			)
+			normalizedDestinationInNextFrame = normalizedDestination
+			global_position = Vector2(
+				denormalizePosition(normalizedDestination).x,
+				global_position.y
+			)
 
 func refreshDebugText():
 	if (shouldShowDebugInfo):
@@ -97,18 +116,32 @@ func getBlocksInSameShape():
 func canMoveToDirection(direction: Vector2):
 	if not isMoving:
 		return false
-	var targetPosition = calculateFutureDestination(direction)
+	var targetPosition = calculateFutureDestinationWithWrapping(direction)
 	if targetPosition.y > normalizedViewportSize.y:
 		return false
+	var cloneOffset = normalizedViewportSize.x
+	var targetPositionCloneLeft = Vector2(
+		targetPosition.x - cloneOffset,
+		targetPosition.y
+	)
+	var targetPositionCloneRight = Vector2(
+		targetPosition.x + cloneOffset,
+		targetPosition.y
+	)
 	var isTargetPositionFree = true
 	for block in get_tree().get_nodes_in_group("blocks"):
-		if block.normalizedDestination == targetPosition:
+		if (block.normalizedDestination == targetPosition
+			|| block.normalizedDestination == targetPositionCloneLeft
+			|| block.normalizedDestination == targetPositionCloneRight):
 			if shapeId == null || not block.is_in_group(shapeId):
 				isTargetPositionFree = false
 	return isTargetPositionFree
 
-func calculateFutureDestination(direction: Vector2):
-	var target = normalizedDestination + direction
+func calculateFutureDestinationWithoutWrapping(direction: Vector2):
+	return normalizedDestination + direction
+
+func calculateFutureDestinationWithWrapping(direction: Vector2):
+	var target = calculateFutureDestinationWithoutWrapping(direction)
 	return Vector2(
 		wrapf(target.x, 1, normalizedViewportSize.x + 1),
 		target.y
@@ -121,8 +154,8 @@ func move(direction: Vector2):
 	for block in getBlocksInSameShape():
 		if not block.canMoveToDirection(direction):
 			canMove = false
-	if canMove:
-		normalizedDestinationInNextFrame = calculateFutureDestination(direction)
+	if canMove && abs(global_position.x - denormalizePosition(normalizedDestination).x) < 4:
+		normalizedDestinationInNextFrame = calculateFutureDestinationWithoutWrapping(direction)
 	refreshDebugText()
 	return canMove
 

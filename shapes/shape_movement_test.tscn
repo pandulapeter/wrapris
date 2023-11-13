@@ -8,22 +8,18 @@
 
 [node name="Shape01" parent="." instance=ExtResource("1_khquu")]
 position = Vector2(399, 101)
-tint = Color(0.890196, 0.243137, 0.937255, 1)
-shouldShowDebugInfo = true
 moveTimerWaitTime = 1.0
 
 [node name="StaticBlock01" parent="." instance=ExtResource("2_y48lt")]
 position = Vector2(425, 988)
 scale = Vector2(0.25, 0.25)
 tint = Color(1, 0.207843, 0.129412, 1)
-shouldShowDebugInfo = true
 isMoving = false
 
 [node name="StaticBlock02" parent="." instance=ExtResource("2_y48lt")]
 position = Vector2(102, 583)
 scale = Vector2(0.25, 0.25)
 tint = Color(1, 0.207843, 0.129412, 1)
-shouldShowDebugInfo = true
 isMoving = false
 
 [node name="TestMenuMenuButton" parent="." instance=ExtResource("3_lo2pg")]

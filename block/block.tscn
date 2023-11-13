@@ -10,6 +10,14 @@ script = ExtResource("1_6dj4i")
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_6ptim")
 
+[node name="SpriteLeftClone" type="Sprite2D" parent="."]
+position = Vector2(-256, 0)
+texture = ExtResource("1_6ptim")
+
+[node name="SpriteRightClone" type="Sprite2D" parent="."]
+position = Vector2(256, 0)
+texture = ExtResource("1_6ptim")
+
 [node name="Label" type="Label" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
