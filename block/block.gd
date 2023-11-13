@@ -8,8 +8,11 @@ extends Node2D
 var normalizedDestination: Vector2
 var normalizedDestinationInNextFrame: Vector2
 var shapeId = ""
+var normalizedViewportSize: Vector2
 
 func _ready():
+	normalizedViewportSize = normalizePosition(get_viewport().size)
+	
 	# Snap to the grid
 	var normalizedPosition = normalizePosition(global_position)
 	global_position = denormalizePosition(normalizedPosition)
@@ -94,13 +97,22 @@ func getBlocksInSameShape():
 func canMoveToDirection(direction: Vector2):
 	if not isMoving:
 		return false
-	var targetPosition = normalizedDestination + direction
+	var targetPosition = calculateFutureDestination(direction)
+	if targetPosition.y > normalizedViewportSize.y:
+		return false
 	var isTargetPositionFree = true
 	for block in get_tree().get_nodes_in_group("blocks"):
 		if block.normalizedDestination == targetPosition:
 			if shapeId == null || not block.is_in_group(shapeId):
 				isTargetPositionFree = false
 	return isTargetPositionFree
+
+func calculateFutureDestination(direction: Vector2):
+	var target = normalizedDestination + direction
+	return Vector2(
+		wrapf(target.x, 1, normalizedViewportSize.x + 1),
+		target.y
+	)
 
 func move(direction: Vector2):
 	# Check that the target position is empty, or is occupied by
@@ -110,7 +122,7 @@ func move(direction: Vector2):
 		if not block.canMoveToDirection(direction):
 			canMove = false
 	if canMove:
-		normalizedDestinationInNextFrame = normalizedDestination + direction
+		normalizedDestinationInNextFrame = calculateFutureDestination(direction)
 	refreshDebugText()
 	return canMove
 

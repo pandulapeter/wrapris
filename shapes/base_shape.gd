@@ -2,10 +2,18 @@ extends Node2D
 
 class_name BaseShape
 
-@export var tint: Color = Color.WHITE
 @export var shouldShowDebugInfo: bool = false
 @export var moveTimerWaitTime: float = 0.5
 var shapeId
+var possibleColors = [
+	Color.BLUE,
+	Color.BLUE_VIOLET,
+	Color.CHARTREUSE,
+	Color.CRIMSON,
+	Color.CYAN,
+	Color.GOLD,
+	Color.GREEN
+]
 
 func getChildBlocks():
 	if (shapeId == null):
@@ -26,6 +34,7 @@ func canMove():
 func initialize():
 	shapeId = "shape" + str($"/root/Shared".onNewShapeCreated())
 	print("Shape " + shapeId + " child count: " + str(get_child_count()))
+	var tint = generateRandomColor()
 	for block in get_children():
 		block.tint = tint
 		block.shouldShowDebugInfo = shouldShowDebugInfo
@@ -38,3 +47,6 @@ func _unhandled_input(event):
 
 func rotateShape():
 	pass
+
+func generateRandomColor():
+	return possibleColors[randi() % possibleColors.size()]

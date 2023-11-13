@@ -34,6 +34,202 @@ tint = Color(0.117647, 0.72549, 0.286275, 1)
 shouldShowDebugInfo = true
 isMoving = false
 
+[node name="StaticBlock05" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(95, 1184)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock06" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(671, 1184)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock07" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(671, 96)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock08" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(95, 96)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock09" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(159, 1120)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock10" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(607, 1120)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock11" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(607, 160)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock12" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(159, 160)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock13" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(223, 1056)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock14" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(543, 1056)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock15" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(543, 224)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock16" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(223, 224)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock17" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(287, 992)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock18" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(479, 992)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock19" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(479, 288)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock20" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(287, 288)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock21" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(351, 928)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock22" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(415, 928)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock23" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(415, 352)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock24" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(351, 352)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock25" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(351, 480)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock26" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(415, 480)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock27" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(415, 800)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock28" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(351, 800)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.784314, 0.4, 0.988235, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock29" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(351, 608)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.262745, 0.631373, 0.921569, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock30" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(415, 608)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.262745, 0.631373, 0.921569, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock31" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(415, 672)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.262745, 0.631373, 0.921569, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock32" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(351, 672)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.262745, 0.631373, 0.921569, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
 [node name="TestMenuMenuButton" parent="." instance=ExtResource("2_7dri8")]
 offset_right = 90.0
 offset_bottom = 31.0
