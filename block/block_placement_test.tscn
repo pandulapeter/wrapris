@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://2neqknijlka6"]
+
+[ext_resource type="PackedScene" uid="uid://3rnb46mqief4" path="res://block/block.tscn" id="1_dbyp8"]
+[ext_resource type="PackedScene" uid="uid://bhqmsjpfrii24" path="res://shared/test_menu.tscn" id="2_7dri8"]
+
+[node name="BlockPlacementTest" type="Node2D"]
+position = Vector2(1, 0)
+
+[node name="StaticBlock01" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(735, 32)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.117647, 0.72549, 0.286275, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock02" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(31, 32)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.117647, 0.72549, 0.286275, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock03" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(735, 1248)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.117647, 0.72549, 0.286275, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="StaticBlock04" parent="." instance=ExtResource("1_dbyp8")]
+position = Vector2(31, 1248)
+scale = Vector2(0.25, 0.25)
+tint = Color(0.117647, 0.72549, 0.286275, 1)
+shouldShowDebugInfo = true
+isMoving = false
+
+[node name="TestMenuMenuButton" parent="." instance=ExtResource("2_7dri8")]
+offset_right = 90.0
+offset_bottom = 31.0
+size_flags_vertical = 8

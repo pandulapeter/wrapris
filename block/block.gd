@@ -4,6 +4,7 @@ extends Node2D
 @export var shouldShowDebugInfo: bool = false
 @export var movementSpeed: float = -1
 @export var isMoving: bool = true
+@export var moveTimerWaitTime: float = 0.5
 var normalizedDestination: Vector2
 var normalizedDestinationInNextFrame: Vector2
 var shapeId = ""
@@ -27,9 +28,13 @@ func initializeInheritedState(groupName):
 	if groupName != "blocks":
 		shapeId = groupName
 	
+	# Initialize the timer
+	$MoveTimer.wait_time = moveTimerWaitTime
+	
 	# Set the block color
 	if tint != null:
 		$Sprite.modulate = tint
+		
 	# Handle debugging
 	$Label.visible = shouldShowDebugInfo
 	refreshDebugText()
@@ -37,6 +42,7 @@ func initializeInheritedState(groupName):
 func _process(delta):
 	if normalizedDestinationInNextFrame != normalizedDestination:
 		normalizedDestination = normalizedDestinationInNextFrame
+		refreshDebugText()
 	
 	# Input handling
 	if Input.is_action_just_pressed("shape_move_left"):
@@ -66,7 +72,8 @@ func normalizePosition(position: Vector2):
 	)
 
 func denormalizePosition(position: Vector2):
-	return position * calculateNormalizationScale()
+	var scale = calculateNormalizationScale()
+	return (position * scale) - (Vector2(1, 1) * scale / 2)
 
 func moveLeft():
 	move(Vector2.LEFT)

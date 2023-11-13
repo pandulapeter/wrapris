@@ -5,7 +5,10 @@ var shapeCount = 0
 
 func _unhandled_input(event):
 		if event.is_action_pressed("ui_exit"):
-			get_tree().quit()
+			if get_parent().get_child(1).get_name() == "Main":
+				get_tree().quit()
+			else:
+				get_tree().change_scene_to_file("res://main.tscn")
 
 func navigateToMainScreen():
 	shapeCount = 0

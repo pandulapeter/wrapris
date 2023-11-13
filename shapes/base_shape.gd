@@ -4,6 +4,7 @@ class_name BaseShape
 
 @export var tint: Color = Color.WHITE
 @export var shouldShowDebugInfo: bool = false
+@export var moveTimerWaitTime: float = 0.5
 var shapeId
 
 func getChildBlocks():
@@ -28,6 +29,7 @@ func initialize():
 	for block in get_children():
 		block.tint = tint
 		block.shouldShowDebugInfo = shouldShowDebugInfo
+		block.moveTimerWaitTime = moveTimerWaitTime
 		block.initializeInheritedState(shapeId)
 
 func _unhandled_input(event):
