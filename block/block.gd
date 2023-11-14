@@ -1,7 +1,6 @@
 extends Node2D
 
 @export var tint: Color = Color.WHITE
-@export var shouldShowDebugInfo: bool = false
 @export var movementSpeed: float = -1
 @export var isMoving: bool = true
 @export var moveTimerWaitTime: float = 0.5
@@ -46,25 +45,11 @@ func initializeInheritedState(groupName):
 		$Sprite.modulate = tint
 		$SpriteLeftClone.modulate = tint
 		$SpriteRightClone.modulate = tint
-		
-	# Handle debugging
-	$Label.visible = shouldShowDebugInfo
-	refreshDebugText()
 
 func _process(delta):
 	if normalizedDestinationInNextFrame != normalizedDestination:
 		normalizedDestination = normalizedDestinationInNextFrame
-		refreshDebugText()
 	
-	# Input handling for test scenes
-	if get_groups().size() == 1:
-		if Input.is_action_just_pressed("shape_move_left"):
-			moveLeft()
-		if Input.is_action_just_pressed("shape_move_right"):
-			moveRight()
-		if Input.is_action_just_pressed("shape_move_down"):
-			moveDown()
-		
 	# Move towards the destination
 	var destination = denormalizePosition(normalizedDestination)
 	if global_position != destination:
@@ -85,10 +70,6 @@ func _process(delta):
 			)
 	else:
 		isSettling = true
-
-func refreshDebugText():
-	if (shouldShowDebugInfo):
-		$Label.text = str(normalizedDestination) + "\n" + str(isMoving)
 
 func calculateNormalizationScale():
 	return $Sprite.texture.get_height() * scale.y
@@ -166,7 +147,6 @@ func move(direction: Vector2, forced: bool):
 			isSettlingAnimation = true
 	if canMove && (forced || !isSettlingAnimation):
 		normalizedDestinationInNextFrame = calculateFutureDestinationWithoutWrapping(direction)
-	refreshDebugText()
 	return canMove
 
 func _on_move_timer_timeout():

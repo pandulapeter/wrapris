@@ -20,18 +20,6 @@ visible = false
 position = Vector2(256, 0)
 texture = ExtResource("1_6ptim")
 
-[node name="Label" type="Label" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 48
-text = "Debug"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="MoveTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true

@@ -9,7 +9,7 @@ func _unhandled_input(event):
 			get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 			get_tree().quit()
 		else:
-			get_tree().change_scene_to_file("res://main.tscn")
+			navigateToMainScreen()
 
 func navigateToMainScreen():
 	shapeCount = 0
