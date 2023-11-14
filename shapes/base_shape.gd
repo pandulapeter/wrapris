@@ -61,13 +61,21 @@ func canMove():
 
 func rotateShape():
 	if rotations.size() > 0:
+		var canRotate = true
 		var index = 0
 		for block in getChildBlocks():
-			block.normalizedDestinationInNextFrame += rotations[rotationVariant][index]
+			if not block.canMoveToDirection(rotations[rotationVariant][index]):
+				canRotate = false
+				break
 			index += 1
-		rotationVariant += 1
-		if rotationVariant > rotations.size()-1:
-			rotationVariant = 0
+		if canRotate:
+			index = 0
+			for block in getChildBlocks():
+				block.normalizedDestinationInNextFrame += rotations[rotationVariant][index]
+				index += 1
+			rotationVariant += 1
+			rotationVariant = wrapi(rotationVariant, 0, rotations.size())
+		return canRotate
 
 func generateRandomColor():
 	return possibleColors[randi() % possibleColors.size()]
