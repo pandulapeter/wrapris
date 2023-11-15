@@ -4,16 +4,8 @@ class_name BaseShape
 
 signal movement_stopped
 
-const BUTTON_HOLD_LIMIT = 200 # causes bugs: 50
-
-@export var nextRotation: PackedScene
-@export var moveTimerWaitTime: float = 0.5
-@export var tint: Color = Color.BLACK
-var lastForcedLeftMovementTimestamp = 0
-var lastForcedRightMovementTimestamp = 0
-var lastForcedDownMovementTimestamp = 0
-var shapeId
-var possibleColors = [
+const BUTTON_HOLD_LIMIT = 150
+const COLORS = [
 	Color.BLUE,
 	Color.BLUE_VIOLET,
 	Color.CHARTREUSE,
@@ -22,6 +14,13 @@ var possibleColors = [
 	Color.GOLD,
 	Color.GREEN
 ]
+
+@export var nextRotation: PackedScene
+@export var moveTimerWaitTime: float = 0.5
+@export var tint: Color = Color.BLACK
+var lastMovementTimestamp = 0
+var shapeId
+
 var rotations = []
 var rotationVariant = 0
 var hasEmittedMovementStoppedSignal = false
@@ -47,23 +46,21 @@ func _process(delta):
 		if shouldRetryRotationInNextFrame:
 			shouldRetryRotationInNextFrame = false
 			rotateShape()
-		if Input.is_action_pressed("shape_move_left") && not Input.is_action_pressed("shape_move_right"):
-			if Time.get_ticks_msec() - lastForcedLeftMovementTimestamp > BUTTON_HOLD_LIMIT:
-				lastForcedLeftMovementTimestamp = Time.get_ticks_msec()
-				for block in getChildBlocks():
-					block.moveLeft()
-		if Input.is_action_pressed("shape_move_right") && not Input.is_action_pressed("shape_move_left"):
-			if Time.get_ticks_msec() - lastForcedRightMovementTimestamp > BUTTON_HOLD_LIMIT:
-				lastForcedRightMovementTimestamp = Time.get_ticks_msec()
-				for block in getChildBlocks():
-					block.moveRight()
-		if Input.is_action_pressed("shape_move_down"):
-			if Time.get_ticks_msec() - lastForcedDownMovementTimestamp > BUTTON_HOLD_LIMIT:
-				lastForcedDownMovementTimestamp = Time.get_ticks_msec()
-				for block in getChildBlocks():
-					block.moveDown()
 		if Input.is_action_just_pressed("shape_rotate"):
 			rotateShape()
+		var movementDirection = Vector2.ZERO
+		if Input.is_action_pressed("shape_move_left"):
+			movementDirection += Vector2.LEFT
+		if Input.is_action_pressed("shape_move_right"):
+			movementDirection += Vector2.RIGHT
+		if Input.is_action_pressed("shape_move_down"):
+			movementDirection += Vector2.DOWN
+		if movementDirection != Vector2.ZERO:
+			var currentTime = Time.get_ticks_msec()
+			if currentTime - lastMovementTimestamp > BUTTON_HOLD_LIMIT:
+				lastMovementTimestamp = currentTime
+				for block in getChildBlocks():
+					block.move(movementDirection)
 
 func getChildBlocks():
 	if (shapeId == null):
@@ -104,7 +101,7 @@ func rotateShape():
 		return canRotate
 
 func generateRandomColor():
-	return possibleColors[randi() % possibleColors.size()]
+	return COLORS[randi() % COLORS.size()]
 
 func onMovementStopped():
 	if !hasEmittedMovementStoppedSignal:

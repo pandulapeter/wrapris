@@ -87,17 +87,6 @@ func denormalizePosition(position: Vector2):
 	var scale = calculateNormalizationScale()
 	return (position * scale) - (Vector2(1, 1) * scale / 2)
 
-func moveLeft():
-	move(Vector2.LEFT, false)
-
-func moveRight():
-	move(Vector2.RIGHT, false)
-
-func moveDown():
-	if !move(Vector2.DOWN, true):
-		movement_stopped.emit()
-		isMoving = false
-
 func getBlocksInSameShape():
 	if shapeId == null:
 		return []
@@ -138,22 +127,23 @@ func calculateFutureDestinationWithWrapping(direction: Vector2):
 		target.y
 	)
 
-func move(direction: Vector2, forced: bool):
+func move(direction: Vector2):
 	# Check that the target position is empty, or is occupied by
 	# other blocks from the very same shape
-	var canMove = canMoveToDirection(direction)
-	var isSettlingAnimation = isSettling
-	for block in getBlocksInSameShape():
-		if not block.canMoveToDirection(direction):
-			canMove = false
-		if block.isSettling:
-			isSettlingAnimation = true
-	if canMove && (forced || !isSettlingAnimation):
-		normalizedDestinationInNextFrame = calculateFutureDestinationWithoutWrapping(direction)
-	return canMove
+	if direction != Vector2.ZERO:
+		var canMove = canMoveToDirection(direction)
+		for block in getBlocksInSameShape():
+			if not block.canMoveToDirection(direction):
+				canMove = false
+		if canMove:
+			global_position = denormalizePosition(normalizedDestination)
+			normalizedDestinationInNextFrame = calculateFutureDestinationWithoutWrapping(direction)
+		return canMove
 
 func animateRotation():
 	$AnimationPlayer.play("rotation")
 
 func _on_move_timer_timeout():
-	moveDown()
+	if !move(Vector2.DOWN):
+		movement_stopped.emit()
+		isMoving = false
