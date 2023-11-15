@@ -2,8 +2,9 @@ extends Node2D
 
 signal movement_stopped
 
+const MOVEMENT_SPEED = 0.2
+
 @export var tint: Color = Color.WHITE
-@export var movementSpeed: float = -1
 @export var isMoving: bool = true
 @export var moveTimerWaitTime: float = 0.5
 var normalizedDestination: Vector2
@@ -28,8 +29,6 @@ func _ready():
 	# Initialize the movement
 	normalizedDestination = normalizedPosition
 	normalizedDestinationInNextFrame = normalizedPosition
-	if movementSpeed <= 0:
-		movementSpeed = $"/root/Shared".blockMovementSpeed
 	
 	# Register to the group
 	initializeInheritedState("blocks")
@@ -55,7 +54,7 @@ func _process(delta):
 	# Move towards the destination
 	var destination = denormalizePosition(normalizedDestination)
 	if global_position != destination:
-		global_position = lerp(global_position, destination, movementSpeed)
+		global_position = lerp(global_position, destination, MOVEMENT_SPEED)
 	
 	# Move the actual block to the other edge after wrapping
 	if abs(global_position.x - destination.x) <= 4:

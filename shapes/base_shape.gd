@@ -4,9 +4,14 @@ class_name BaseShape
 
 signal movement_stopped
 
+const BUTTON_HOLD_LIMIT = 200 # causes bugs: 50
+
 @export var nextRotation: PackedScene
 @export var moveTimerWaitTime: float = 0.5
 @export var tint: Color = Color.BLACK
+var lastForcedLeftMovementTimestamp = 0
+var lastForcedRightMovementTimestamp = 0
+var lastForcedDownMovementTimestamp = 0
 var shapeId
 var possibleColors = [
 	Color.BLUE,
@@ -20,6 +25,7 @@ var possibleColors = [
 var rotations = []
 var rotationVariant = 0
 var hasEmittedMovementStoppedSignal = false
+var shouldRetryRotationInNextFrame = false
 
 func initialize(rotations):
 	self.rotations = rotations
@@ -38,15 +44,24 @@ func initialize(rotations):
 
 func _process(delta):
 	if canMove():
-		if Input.is_action_just_pressed("shape_move_left"):
-			for block in getChildBlocks():
-				block.moveLeft()
-		if Input.is_action_just_pressed("shape_move_right"):
-			for block in getChildBlocks():
-				block.moveRight()
-		if Input.is_action_just_pressed("shape_move_down"):
-			for block in getChildBlocks():
-				block.moveDown()
+		if shouldRetryRotationInNextFrame:
+			shouldRetryRotationInNextFrame = false
+			rotateShape()
+		if Input.is_action_pressed("shape_move_left"):
+			if Time.get_ticks_msec() - lastForcedLeftMovementTimestamp > BUTTON_HOLD_LIMIT:
+				lastForcedLeftMovementTimestamp = Time.get_ticks_msec()
+				for block in getChildBlocks():
+					block.moveLeft()
+		if Input.is_action_pressed("shape_move_right"):
+			if Time.get_ticks_msec() - lastForcedRightMovementTimestamp > BUTTON_HOLD_LIMIT:
+				lastForcedRightMovementTimestamp = Time.get_ticks_msec()
+				for block in getChildBlocks():
+					block.moveRight()
+		if Input.is_action_pressed("shape_move_down"):
+			if Time.get_ticks_msec() - lastForcedDownMovementTimestamp > BUTTON_HOLD_LIMIT:
+				lastForcedDownMovementTimestamp = Time.get_ticks_msec()
+				for block in getChildBlocks():
+					block.moveDown()
 		if Input.is_action_just_pressed("shape_rotate"):
 			rotateShape()
 
@@ -74,6 +89,9 @@ func rotateShape():
 			if not block.canMoveToDirection(rotations[rotationVariant][index]):
 				canRotate = false
 				break
+			if block.isSettling:
+				shouldRetryRotationInNextFrame = true
+				canRotate = false
 			index += 1
 		if canRotate:
 			index = 0
