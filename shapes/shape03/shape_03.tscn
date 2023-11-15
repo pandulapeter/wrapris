@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://nkfghy6mno7b"]
+
+[ext_resource type="Script" path="res://shapes/shape03/shape_03.gd" id="1_dm2u4"]
+[ext_resource type="PackedScene" uid="uid://3rnb46mqief4" path="res://block/block.tscn" id="2_v2r7r"]
+
+[node name="Shape03" type="Node2D"]
+script = ExtResource("1_dm2u4")
+
+[node name="Block01" parent="." instance=ExtResource("2_v2r7r")]
+position = Vector2(-64, -29)
+scale = Vector2(0.25, 0.25)
+
+[node name="Block02" parent="." instance=ExtResource("2_v2r7r")]
+position = Vector2(0, -29)
+scale = Vector2(0.25, 0.25)
+
+[node name="Block03" parent="." instance=ExtResource("2_v2r7r")]
+position = Vector2(0, 32)
+scale = Vector2(0.25, 0.25)
+
+[node name="Block04" parent="." instance=ExtResource("2_v2r7r")]
+position = Vector2(64, 32)
+scale = Vector2(0.25, 0.25)
