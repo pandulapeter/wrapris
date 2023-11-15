@@ -7,7 +7,8 @@ var shapes = [
 	preload("res://shapes/shape03/shape_03.tscn"),
 	preload("res://shapes/shape04/shape_04.tscn"),
 	preload("res://shapes/shape05/shape_05.tscn"),
-	preload("res://shapes/shape06/shape_06.tscn")
+	preload("res://shapes/shape06/shape_06.tscn"),
+	preload("res://shapes/shape07/shape_07.tscn")
 ]
 
 func _ready():

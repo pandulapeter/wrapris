@@ -47,12 +47,12 @@ func _process(delta):
 		if shouldRetryRotationInNextFrame:
 			shouldRetryRotationInNextFrame = false
 			rotateShape()
-		if Input.is_action_pressed("shape_move_left"):
+		if Input.is_action_pressed("shape_move_left") && not Input.is_action_pressed("shape_move_right"):
 			if Time.get_ticks_msec() - lastForcedLeftMovementTimestamp > BUTTON_HOLD_LIMIT:
 				lastForcedLeftMovementTimestamp = Time.get_ticks_msec()
 				for block in getChildBlocks():
 					block.moveLeft()
-		if Input.is_action_pressed("shape_move_right"):
+		if Input.is_action_pressed("shape_move_right") && not Input.is_action_pressed("shape_move_left"):
 			if Time.get_ticks_msec() - lastForcedRightMovementTimestamp > BUTTON_HOLD_LIMIT:
 				lastForcedRightMovementTimestamp = Time.get_ticks_msec()
 				for block in getChildBlocks():
