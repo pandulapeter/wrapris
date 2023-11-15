@@ -2,6 +2,8 @@ extends Node2D
 
 class_name BaseShape
 
+signal movement_stopped
+
 @export var nextRotation: PackedScene
 @export var moveTimerWaitTime: float = 0.5
 @export var tint: Color = Color.BLACK
@@ -17,6 +19,7 @@ var possibleColors = [
 ]
 var rotations = [[]]
 var rotationVariant = 0
+var hasEmittedMovementStoppedSignal = false
 
 func initialize(rotations):
 	self.rotations = rotations
@@ -28,6 +31,9 @@ func initialize(rotations):
 		block.tint = tint
 		block.moveTimerWaitTime = moveTimerWaitTime
 		block.initializeInheritedState(shapeId)
+		block.movement_stopped.connect(onMovementStopped)
+	for n in randi() % rotations.size():
+		rotateShape()
 
 func _process(delta):
 	if canMove():
@@ -79,3 +85,9 @@ func rotateShape():
 
 func generateRandomColor():
 	return possibleColors[randi() % possibleColors.size()]
+
+func onMovementStopped():
+	if !hasEmittedMovementStoppedSignal:
+		movement_stopped.emit()
+		hasEmittedMovementStoppedSignal = true
+	

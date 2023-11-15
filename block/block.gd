@@ -1,5 +1,7 @@
 extends Node2D
 
+signal movement_stopped
+
 @export var tint: Color = Color.WHITE
 @export var movementSpeed: float = -1
 @export var isMoving: bool = true
@@ -93,6 +95,7 @@ func moveRight():
 
 func moveDown():
 	if !move(Vector2.DOWN, true):
+		movement_stopped.emit()
 		isMoving = false
 
 func getBlocksInSameShape():
