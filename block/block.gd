@@ -1,6 +1,7 @@
 extends Node2D
 
 signal movement_stopped
+signal row_completed
 
 const MOVEMENT_SPEED = 0.2
 
@@ -110,9 +111,9 @@ func canMoveToDirection(direction: Vector2):
 	)
 	var isTargetPositionFree = true
 	for block in get_tree().get_nodes_in_group("blocks"):
-		if (block.normalizedDestination == targetPosition
-			|| block.normalizedDestination == targetPositionCloneLeft
-			|| block.normalizedDestination == targetPositionCloneRight):
+		if (block.normalizedDestinationInNextFrame == targetPosition
+			|| block.normalizedDestinationInNextFrame == targetPositionCloneLeft
+			|| block.normalizedDestinationInNextFrame == targetPositionCloneRight):
 			if shapeId == null || not block.is_in_group(shapeId):
 				isTargetPositionFree = false
 	return isTargetPositionFree
@@ -147,3 +148,17 @@ func _on_move_timer_timeout():
 	if !move(Vector2.DOWN):
 		movement_stopped.emit()
 		isMoving = false
+		$MoveTimer.stop()
+		var blocksInTheSameRow = 0
+		var rowIndex = normalizedDestination.y
+		for block in get_tree().get_nodes_in_group("blocks"):
+			if block.normalizedDestination.y == rowIndex:
+				blocksInTheSameRow += 1
+		if normalizedViewportSize.x == blocksInTheSameRow:
+			row_completed.emit(rowIndex)
+			for block in get_tree().get_nodes_in_group("blocks"):
+				if block.normalizedDestination.y == rowIndex:
+					block.queue_free()
+				else:
+					if block.normalizedDestination.y < rowIndex:
+						block.normalizedDestinationInNextFrame = block.normalizedDestination + Vector2.DOWN

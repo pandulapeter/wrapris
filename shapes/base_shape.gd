@@ -3,8 +3,9 @@ extends Node2D
 class_name BaseShape
 
 signal movement_stopped
+signal row_completed
 
-const BUTTON_HOLD_LIMIT = 150
+const BUTTON_HOLD_LIMIT = 50
 const COLORS = [
 	Color.BLUE,
 	Color.BLUE_VIOLET,
@@ -25,6 +26,7 @@ var rotations = []
 var rotationVariant = 0
 var hasEmittedMovementStoppedSignal = false
 var shouldRetryRotationInNextFrame = false
+var lastCompletedRow = -1
 
 func initialize(rotations):
 	self.rotations = rotations
@@ -37,12 +39,15 @@ func initialize(rotations):
 		block.moveTimerWaitTime = moveTimerWaitTime
 		block.initializeInheritedState(shapeId)
 		block.movement_stopped.connect(onMovementStopped)
+		block.row_completed.connect(onRowCompleted)
 	if (rotations.size() > 0):
 		for n in randi() % rotations.size():
 			rotateShape()
 
 func _process(delta):
 	if canMove():
+		if lastCompletedRow != -1:
+			lastCompletedRow = -1
 		if shouldRetryRotationInNextFrame:
 			shouldRetryRotationInNextFrame = false
 			rotateShape()
@@ -107,4 +112,10 @@ func onMovementStopped():
 	if !hasEmittedMovementStoppedSignal:
 		movement_stopped.emit()
 		hasEmittedMovementStoppedSignal = true
+
+func onRowCompleted(index):
+	if lastCompletedRow != index:
+		lastCompletedRow = index
+		print("Row "+ str(index) + "completed")
+		row_completed.emit()
 	
