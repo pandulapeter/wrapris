@@ -4,7 +4,8 @@ var spawnX = 0
 var shapes = [
 	preload("res://shapes/shape01/shape_01.tscn"),
 	preload("res://shapes/shape02/shape_02.tscn"),
-	preload("res://shapes/shape03/shape_03.tscn")
+	preload("res://shapes/shape03/shape_03.tscn"),
+	preload("res://shapes/shape04/shape_04.tscn")
 ]
 
 func _ready():
