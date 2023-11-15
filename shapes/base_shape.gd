@@ -79,6 +79,7 @@ func rotateShape():
 			index = 0
 			for block in getChildBlocks():
 				block.normalizedDestinationInNextFrame += rotations[rotationVariant][index]
+				block.animateRotation()
 				index += 1
 			rotationVariant += 1
 			rotationVariant = wrapi(rotationVariant, 0, rotations.size())

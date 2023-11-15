@@ -15,6 +15,6 @@ func _ready():
 
 func createRandomShape():
 	var shape : BaseShape = shapes[randi() % shapes.size()].instantiate()
-	shape.global_position = Vector2(spawnX, 0)
+	shape.global_position = Vector2(spawnX, -32)
 	shape.movement_stopped.connect(createRandomShape)
 	add_child(shape)

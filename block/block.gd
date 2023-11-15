@@ -60,6 +60,7 @@ func _process(delta):
 	# Move the actual block to the other edge after wrapping
 	if abs(global_position.x - destination.x) <= 4:
 		isSettling = false
+		$Sprite.rotation = 0
 		if (normalizedDestination.x != wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1)):
 			normalizedDestination = Vector2(
 				wrapf(normalizedDestination.x, 1, normalizedViewportSize.x + 1),
@@ -151,6 +152,9 @@ func move(direction: Vector2, forced: bool):
 	if canMove && (forced || !isSettlingAnimation):
 		normalizedDestinationInNextFrame = calculateFutureDestinationWithoutWrapping(direction)
 	return canMove
+
+func animateRotation():
+	$AnimationPlayer.play("rotation")
 
 func _on_move_timer_timeout():
 	moveDown()
