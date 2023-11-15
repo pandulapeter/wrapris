@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://shapes/shape01/shape_01.gd" id="1_ucx3q"]
 [ext_resource type="PackedScene" uid="uid://3rnb46mqief4" path="res://block/block.tscn" id="2_clh6j"]
 
-[node name="Shape01Rotation01" type="Node2D"]
+[node name="Shape01" type="Node2D"]
 script = ExtResource("1_ucx3q")
 moveTimerWaitTime = null
 tint = null

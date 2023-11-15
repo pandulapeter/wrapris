@@ -17,7 +17,7 @@ var possibleColors = [
 	Color.GOLD,
 	Color.GREEN
 ]
-var rotations = [[]]
+var rotations = []
 var rotationVariant = 0
 var hasEmittedMovementStoppedSignal = false
 
@@ -32,8 +32,9 @@ func initialize(rotations):
 		block.moveTimerWaitTime = moveTimerWaitTime
 		block.initializeInheritedState(shapeId)
 		block.movement_stopped.connect(onMovementStopped)
-	for n in randi() % rotations.size():
-		rotateShape()
+	if (rotations.size() > 0):
+		for n in randi() % rotations.size():
+			rotateShape()
 
 func _process(delta):
 	if canMove():
