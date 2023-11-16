@@ -10,13 +10,23 @@ var shapes = [
 	preload("res://shapes/shape06/shape_06.tscn"),
 	preload("res://shapes/shape07/shape_07.tscn")
 ]
+var score = 0
 
 func _ready():
 	spawnX = get_viewport().size.x / 2
+	updateScoreLabel()
 	createRandomShape()
 
 func createRandomShape():
 	var shape : BaseShape = shapes[randi() % shapes.size()].instantiate()
 	shape.global_position = Vector2(spawnX, -32)
 	shape.movement_stopped.connect(createRandomShape)
+	shape.row_completed.connect(onRowCompleted)
 	add_child(shape)
+
+func onRowCompleted():
+	score += 1
+	updateScoreLabel()
+
+func updateScoreLabel():
+	$ScoreLabel.text = "Score: " + str(score)

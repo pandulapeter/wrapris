@@ -5,7 +5,7 @@ class_name BaseShape
 signal movement_stopped
 signal row_completed
 
-const BUTTON_HOLD_LIMIT = 50
+const BUTTON_HOLD_LIMIT = 100
 const COLORS = [
 	Color.BLUE,
 	Color.BLUE_VIOLET,
@@ -116,6 +116,7 @@ func onMovementStopped():
 func onRowCompleted(index):
 	if lastCompletedRow != index:
 		lastCompletedRow = index
-		print("Row "+ str(index) + "completed")
 		row_completed.emit()
-	
+		for block in get_tree().get_nodes_in_group("blocks"):
+			if block.normalizedDestinationInNextFrame.y <= index:
+				block.normalizedDestinationInNextFrame += Vector2.DOWN

@@ -3,7 +3,7 @@ extends Node2D
 signal movement_stopped
 signal row_completed
 
-const MOVEMENT_SPEED = 0.2
+const MOVEMENT_SPEED = 0.25
 
 @export var tint: Color = Color.WHITE
 @export var isMoving: bool = true
@@ -149,16 +149,16 @@ func _on_move_timer_timeout():
 		movement_stopped.emit()
 		isMoving = false
 		$MoveTimer.stop()
-		var blocksInTheSameRow = 0
-		var rowIndex = normalizedDestination.y
+		verifyFullRow()
+
+func verifyFullRow():
+	var blocksInTheSameRow = 0
+	var rowIndex = normalizedDestination.y
+	for block in get_tree().get_nodes_in_group("blocks"):
+		if block.normalizedDestination.y == rowIndex:
+			blocksInTheSameRow += 1
+	if normalizedViewportSize.x == blocksInTheSameRow:
 		for block in get_tree().get_nodes_in_group("blocks"):
 			if block.normalizedDestination.y == rowIndex:
-				blocksInTheSameRow += 1
-		if normalizedViewportSize.x == blocksInTheSameRow:
-			row_completed.emit(rowIndex)
-			for block in get_tree().get_nodes_in_group("blocks"):
-				if block.normalizedDestination.y == rowIndex:
-					block.queue_free()
-				else:
-					if block.normalizedDestination.y < rowIndex:
-						block.normalizedDestinationInNextFrame = block.normalizedDestination + Vector2.DOWN
+				block.queue_free()
+		row_completed.emit(rowIndex)
