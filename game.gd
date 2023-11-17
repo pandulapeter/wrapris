@@ -11,21 +11,31 @@ var shapes = [
 	preload("res://shapes/shape07/shape_07.tscn")
 ]
 var score = 0
+var scoreLabelPosition: Vector2
+var menuButtonPosition: Vector2
 
 func _ready():
 	spawnX = get_viewport().size.x / 2
 	updateScoreLabel()
 	createRandomShape()
-	var safeArea = DisplayServer.get_display_safe_area()
-	$ScoreLabel.global_position = Vector2(
-		$ScoreLabel.global_position.x + safeArea.position.x + 32,
-		$ScoreLabel.global_position.y + safeArea.position.y,
-	)
-	$MenuButton.global_position = Vector2(
-		$MenuButton.global_position.x - safeArea.position.x - 32,
-		$MenuButton.global_position.y + safeArea.position.y
-	)
+	scoreLabelPosition = $ScoreLabel.global_position
+	menuButtonPosition = $MenuButton.global_position
+	resizeSafeArea()
+	get_tree().get_root().size_changed.connect(resizeSafeArea)
 
+func resizeSafeArea():
+	var safeArea = DisplayServer.get_display_safe_area()
+	$ScoreLabel.set_offsets_preset(
+		Control.LayoutPreset.PRESET_TOP_LEFT,
+		Control.LayoutPresetMode.PRESET_MODE_MINSIZE,
+		safeArea.position.y
+	)
+	
+	$MenuButton.set_offsets_preset(
+		Control.LayoutPreset.PRESET_TOP_RIGHT,
+		Control.LayoutPresetMode.PRESET_MODE_MINSIZE,
+		safeArea.position.y
+	)
 
 func createRandomShape():
 	var shape : BaseShape = shapes[randi() % shapes.size()].instantiate()
