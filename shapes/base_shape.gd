@@ -28,6 +28,8 @@ var hasEmittedMovementStoppedSignal = false
 var shouldRetryRotationInNextFrame = false
 var lastCompletedRow = -1
 
+var touch
+
 func initialize(rotations):
 	self.rotations = rotations
 	if shapeId == null:
@@ -66,6 +68,36 @@ func _process(delta):
 				lastMovementTimestamp = currentTime
 				for block in getChildBlocks():
 					block.move(movementDirection)
+
+func _unhandled_input(event):
+	if event is InputEventScreenTouch && event.index == 0:
+		if event.is_pressed():
+			touch = event.position
+		if event.is_released():
+			var position = event.position
+			if touch != null && touch != position:
+				var movementDirection = (position - touch).normalized()
+				var distanceToLeft = movementDirection.distance_to(Vector2.LEFT)
+				var distanceToUp = movementDirection.distance_to(Vector2.UP)
+				var distanceToRight = movementDirection.distance_to(Vector2.RIGHT)
+				var distanceToDown = movementDirection.distance_to(Vector2.DOWN)
+				match [distanceToLeft, distanceToUp, distanceToRight, distanceToDown].min():
+					distanceToLeft:
+						for block in getChildBlocks():
+							block.move(Vector2.LEFT)
+						print("Left detected")
+					distanceToUp:
+						rotateShape()
+						print("Up detected")
+					distanceToRight:
+						for block in getChildBlocks():
+							block.move(Vector2.RIGHT)
+						print("Right detected")
+					distanceToDown:
+						for block in getChildBlocks():
+							block.move(Vector2.DOWN)
+						print("Down detected")
+			touch = null
 
 func getChildBlocks():
 	if (shapeId == null):

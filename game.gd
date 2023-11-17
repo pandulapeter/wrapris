@@ -30,3 +30,7 @@ func onRowCompleted():
 
 func updateScoreLabel():
 	$ScoreLabel.text = "Score: " + str(score)
+
+
+func _on_menu_button_pressed():
+	$"/root/Shared".navigateToMainScreen()
