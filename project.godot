@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Wrapris"
 run/main_scene="res://main.tscn"
+config/quit_on_go_back=false
 config/features=PackedStringArray("4.1", "Forward Plus")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 config/icon="res://icon.svg"
@@ -24,8 +25,7 @@ Shared="*res://shared/shared.tscn"
 
 window/size/viewport_width=768
 window/size/viewport_height=1280
-window/stretch/mode="viewport"
-window/handheld/orientation=1
+window/handheld/orientation=6
 
 [input]
 
@@ -72,7 +72,8 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_2d=3
 anti_aliasing/quality/msaa_3d=3
 anti_aliasing/quality/screen_space_aa=1
-anti_aliasing/quality/use_taa=true

@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 var spawnX = 0
 var shapes = [
@@ -16,6 +16,16 @@ func _ready():
 	spawnX = get_viewport().size.x / 2
 	updateScoreLabel()
 	createRandomShape()
+	var safeArea = DisplayServer.get_display_safe_area()
+	$ScoreLabel.global_position = Vector2(
+		$ScoreLabel.global_position.x + safeArea.position.x + 32,
+		$ScoreLabel.global_position.y + safeArea.position.y,
+	)
+	$MenuButton.global_position = Vector2(
+		$MenuButton.global_position.x - safeArea.position.x - 32,
+		$MenuButton.global_position.y + safeArea.position.y
+	)
+
 
 func createRandomShape():
 	var shape : BaseShape = shapes[randi() % shapes.size()].instantiate()
