@@ -7,13 +7,17 @@ signal row_completed
 
 const BUTTON_HOLD_LIMIT = 100
 const COLORS = [
+	Color.RED,
 	Color.BLUE,
-	Color.BLUE_VIOLET,
-	Color.CHARTREUSE,
-	Color.CRIMSON,
+	Color.GREEN,
+	Color.YELLOW,
+	Color.PURPLE,
+	Color.ORANGE,
 	Color.CYAN,
-	Color.GOLD,
-	Color.GREEN
+	Color.MAGENTA,
+	Color.LIGHT_GREEN,
+	Color.LIGHT_BLUE,
+	Color.PINK
 ]
 
 @export var nextRotation: PackedScene
